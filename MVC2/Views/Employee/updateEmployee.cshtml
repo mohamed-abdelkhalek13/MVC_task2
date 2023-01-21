@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>update Employee</h1>
+
+<form action="/Employee/updateEmployeeInfo">
+    <label>id</label>
+    <input id="id" name="id" type="number" value="@Model.id" hidden/>
+
+    <label>first name</label>
+    <input id="fName" name="fname" type="text" value= "@Model.fname" />
+
+    <label>middle init</label>
+    <input id="minit" name="minit" type="text" value = "@Model.minit"/>
+
+    <label>last name</label>
+    <input id="lname" name="lname" type="text" value="@Model.lname" />
+
+    <label>sex</label>
+    <input id="sex" name="sex" type="text" value="@Model.sex" />
+
+    <label>address</label>
+    <input id="address" name="address" type="text" value="@Model.address" />
+
+    <label>salary</label>
+    <input id="salary" name="salary" type="number" value="@Model.salary" />
+
+    <label>supervisor</label>
+    <select id="supervisorid" name="supervisorid">
+        <option value="">Choose supervisor</option>
+        @foreach (var emp in ViewBag.all)
+        {
+            if(emp.id == Model.supervisorid) {
+                <option value="@emp.id" selected>@emp.fname</option>
+            } else {
+                <option value="@emp.id">@emp.fname</option>
+            }
+
+        }
+    </select>
+
+    <input type="submit" value="Edit" />
+</form>
