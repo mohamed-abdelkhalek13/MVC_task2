@@ -16,5 +16,10 @@ namespace MVC2.Models
         public string? relationship { get; set; }
         public int employeeid { get; set; }
         public virtual Employee? employee { get; set; }
-    }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int order { get; set; }
+
+
+
+}
 }

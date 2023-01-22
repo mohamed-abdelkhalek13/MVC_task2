@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Edit dependent info</h1>
+
+<form action="/Dependent/updateDependentInfo">
+    <input id="employeeid" name="employeeid" type="number" hidden value="@Model.employeeid" />
+    <input id="order" name="order" type="number" hidden value="@Model.order" />
+
+    <label> name</label>
+    <input id="name" name="name" type="text" value="@Model.name" />
+
+    <label>sex</label>
+    <input id="sex" name="sex" type="text" value="@Model.sex" />
+
+    <label>birthday</label>
+    <input id="birthday" name="birthday" type="text" value="@Model.birthday" />
+    <label>relationship</label>
+    <input id="relationship" name="relationship" type="text" value="@Model.relationship" />
+
+
+
+
+    <input type="submit" value="update" />
+</form>

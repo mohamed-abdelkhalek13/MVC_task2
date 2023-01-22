@@ -2,7 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to the company page</h1>
-    <h2> you can mange all employees through this website by using side bar.</h2>
-</div>
+<h1>Login Page</h1>
+
+<form action="/Home/userlogin">
+    <label>name</label>
+    <input id="fName" name="fname" type="text" />
+
+    <label>ssn</label>
+    <input id="id" name="id" type="number" />
+    <input type="submit" value="login" />
+
+
+</form>

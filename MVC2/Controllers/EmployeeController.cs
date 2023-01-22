@@ -28,6 +28,19 @@ namespace MVC2.Controllers
                 return View(empDetails);
             }
         }
+        public IActionResult userDetails()
+        {
+            var id = HttpContext.Session.GetInt32("id");
+            var Details = db.employees.SingleOrDefault(s => s.id == id);
+            if (Details == null)
+            {
+                return View("errorpage");
+            }
+            else
+            {
+                return View(Details);
+            }
+        }
         public IActionResult addemployeeform()
         {
             var employessList = db.employees.ToList();

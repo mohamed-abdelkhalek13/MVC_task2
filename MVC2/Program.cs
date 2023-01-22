@@ -8,6 +8,7 @@ namespace MVC2
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -25,6 +26,7 @@ namespace MVC2
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.UseSession();
 
             app.Run();
         }

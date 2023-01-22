@@ -20,8 +20,11 @@ namespace MVC2.Models
         [Column(TypeName ="Date")]
         public DateTime? birthday { get; set; }
         public int? supervisorid { get; set; }
+        public int? departmentWFid { get; set; }
         public virtual Employee? supervisor { get; set; }
         public virtual List<WorksOn>? worksOns { get; set; }
+        public virtual Department? departmentWF { get; set; }
+        public virtual Department? departmentMNG { get; set; }
 
     }
 }

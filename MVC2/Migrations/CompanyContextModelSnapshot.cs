@@ -33,6 +33,9 @@ namespace MVC2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<int?>("employeeid")
+                        .HasColumnType("int");
+
                     b.Property<string>("location")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -41,7 +44,14 @@ namespace MVC2.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<DateTime?>("startDate")
+                        .HasColumnType("Date");
+
                     b.HasKey("id");
+
+                    b.HasIndex("employeeid")
+                        .IsUnique()
+                        .HasFilter("[employeeid] IS NOT NULL");
 
                     b.ToTable("departments");
                 });
@@ -57,6 +67,12 @@ namespace MVC2.Migrations
 
                     b.Property<DateTime?>("birthday")
                         .HasColumnType("Date");
+
+                    b.Property<int>("order")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("order"));
 
                     b.Property<string>("relationship")
                         .HasMaxLength(20)
@@ -88,6 +104,9 @@ namespace MVC2.Migrations
                     b.Property<DateTime?>("birthday")
                         .HasColumnType("Date");
 
+                    b.Property<int?>("departmentWFid")
+                        .HasColumnType("int");
+
                     b.Property<string>("fname")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -111,6 +130,8 @@ namespace MVC2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("departmentWFid");
 
                     b.HasIndex("supervisorid");
 
@@ -161,6 +182,15 @@ namespace MVC2.Migrations
                     b.ToTable("workson");
                 });
 
+            modelBuilder.Entity("MVC2.Models.Department", b =>
+                {
+                    b.HasOne("MVC2.Models.Employee", "employee")
+                        .WithOne("departmentMNG")
+                        .HasForeignKey("MVC2.Models.Department", "employeeid");
+
+                    b.Navigation("employee");
+                });
+
             modelBuilder.Entity("MVC2.Models.Dependent", b =>
                 {
                     b.HasOne("MVC2.Models.Employee", "employee")
@@ -174,9 +204,15 @@ namespace MVC2.Migrations
 
             modelBuilder.Entity("MVC2.Models.Employee", b =>
                 {
+                    b.HasOne("MVC2.Models.Department", "departmentWF")
+                        .WithMany("employees")
+                        .HasForeignKey("departmentWFid");
+
                     b.HasOne("MVC2.Models.Employee", "supervisor")
                         .WithMany()
                         .HasForeignKey("supervisorid");
+
+                    b.Navigation("departmentWF");
 
                     b.Navigation("supervisor");
                 });
@@ -211,8 +247,15 @@ namespace MVC2.Migrations
                     b.Navigation("project");
                 });
 
+            modelBuilder.Entity("MVC2.Models.Department", b =>
+                {
+                    b.Navigation("employees");
+                });
+
             modelBuilder.Entity("MVC2.Models.Employee", b =>
                 {
+                    b.Navigation("departmentMNG");
+
                     b.Navigation("worksOns");
                 });
 

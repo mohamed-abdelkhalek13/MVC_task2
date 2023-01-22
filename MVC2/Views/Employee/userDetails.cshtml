@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<ul>
+    <li>employee name: @Model.fname @Model.minit @Model.lname</li>
+    <li>sex: @Model.sex</li>
+    <li>address: @Model.address</li>
+    <li>salary: @Model.salary</li>
+    <li>birthday: @Model.birthday</li>
+    <li>supervisor name: @Model.supervisor.fname </li>
+    <button><a href="/Dependent/showDependents">show dependents</a></button>
+</ul>
