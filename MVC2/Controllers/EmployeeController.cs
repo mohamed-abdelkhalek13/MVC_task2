@@ -32,15 +32,17 @@ namespace MVC2.Controllers
         {
             var id = HttpContext.Session.GetInt32("id");
             var Details = db.employees.SingleOrDefault(s => s.id == id);
-            if (Details == null)
+            if (Details.id == Details.supervisorid)
             {
-                return View("errorpage");
+                return View("mngrDetails", Details);
             }
             else
             {
                 return View(Details);
             }
         }
+
+
         public IActionResult addemployeeform()
         {
             var employessList = db.employees.ToList();

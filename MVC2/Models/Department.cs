@@ -15,6 +15,7 @@ namespace MVC2.Models
         public virtual List<Employee>? employees { get; set; }
         public int? employeeid { get; set; }
         public virtual Employee? employee { get; set; }
+        public virtual List<Project>? Projects { get; set; }
 
     }
 }
