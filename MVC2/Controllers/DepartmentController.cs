@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC2.Models;
 
 namespace MVC2.Controllers
@@ -53,6 +54,48 @@ namespace MVC2.Controllers
             }
 
             return RedirectToAction("showDepartment");
+        }
+        public IActionResult displayDepartments()
+        {
+            var depts = db.departments.ToList();
+            return View(depts);
+        }
+        public IActionResult addDepartmentForm()
+        {
+            
+            var empsList = new SelectList(db.employees.ToList(), "id", "fname");
+
+            return View(empsList);
+        }
+        public IActionResult addDepartment(Department dept)
+        {
+            db.departments.Add(dept);
+            db.SaveChanges();
+            return RedirectToAction("displayDepartments");
+        }
+        public IActionResult updateForm(int id)
+        {
+            var dept = db.departments.SingleOrDefault(d => d.id == id);
+            var empsList = new SelectList(db.employees.ToList(), "id", "fname");
+            ViewBag.list = empsList;
+            return View(dept);
+        }
+        public IActionResult updateDepartment(Department dept)
+        {
+            var oldDept = db.departments.SingleOrDefault(d => d.id == dept.id);
+            oldDept.name = dept.name;
+            oldDept.location = dept.location;
+            oldDept.startDate = dept.startDate;
+            oldDept.employeeid = dept.employeeid;
+            db.SaveChanges();
+            return RedirectToAction("displayDepartments");
+        }
+        public IActionResult deleteDepartment(int id)
+        {
+            var dept = db.departments.SingleOrDefault(d => d.id == id);
+            db.departments.Remove(dept);
+            db.SaveChanges();
+            return RedirectToAction("displayDepartments");
         }
     }
 }

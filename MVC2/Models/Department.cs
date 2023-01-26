@@ -13,6 +13,7 @@ namespace MVC2.Models
         [Column(TypeName ="Date")]
         public DateTime? startDate { get; set; }
         public virtual List<Employee>? employees { get; set; }
+        [Display(Name = "Manager")]
         public int? employeeid { get; set; }
         public virtual Employee? employee { get; set; }
         public virtual List<Project>? Projects { get; set; }

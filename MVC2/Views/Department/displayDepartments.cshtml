@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    int index = 1;
+}
+<h1>Compnay departments</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th class="p-4">#</th>
+            <th class ="p-4">Name</th>
+            <th class="p-4">location</th>
+            <th class="p-4">start date</th>
+            <th class="p-4">manager</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dept in Model)
+        {
+            <tr>
+                <td class="p-4">@(index++)</td>
+                <td class="p-4">@dept.name</td>
+                <td class="p-4">@dept.location</td>
+                <td class ="p-4">@dept.startDate</td>
+                <td class="p-4">@dept.employee.fname @dept.employee.minit @dept.employee.lname</td>
+                <td>@Html.ActionLink("update", "updateForm", "Department", new {id = dept.id})</td>
+                <td>@Html.ActionLink("delete", "deleteDepartment", "Department",  new {id = dept.id})</td>
+            </tr>
+        }
+        <tr>
+            <td>
+                @Html.ActionLink("Add new department", "addDepartmentForm", "Department")
+            </td>
+        </tr>
+    </tbody>
+</table>
