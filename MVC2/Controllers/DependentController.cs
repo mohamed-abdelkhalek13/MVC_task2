@@ -37,11 +37,11 @@ namespace MVC2.Controllers
             db.SaveChanges();
             return RedirectToAction("showDependents");
         }
-        public IActionResult updateDependent(int id)
+        public IActionResult updateDependent(int id, string name)
         {
             db = new CompanyContext();
             var sid = HttpContext.Session.GetInt32("id");
-            var dependent = db.dependents.Where(s => s.employeeid == sid && s.order == id).SingleOrDefault();
+            var dependent = db.dependents.Where(s => s.employeeid == sid && s.name == name).SingleOrDefault();
             TempData["msg"] = "dependent updated successfully";
 
             return View(dependent);
@@ -49,11 +49,12 @@ namespace MVC2.Controllers
         public IActionResult updateDependentInfo(Dependent dep)
         {
             db = new CompanyContext();
-            var oldDependent = db.dependents.SingleOrDefault(s => s.employeeid == dep.employeeid && s.order == dep.order);
+            var oldDependent = db.dependents.SingleOrDefault(s => s.employeeid == dep.employeeid && s.name == dep.name);
             oldDependent.name = dep.name;
             oldDependent.sex = dep.sex;
             oldDependent.employeeid = dep.employeeid;
             oldDependent.birthday = dep.birthday;
+            oldDependent.relationship = dep.relationship;
             db.SaveChanges();
 
             return RedirectToAction("showDependents");

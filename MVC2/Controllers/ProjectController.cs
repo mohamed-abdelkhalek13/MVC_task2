@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC2.Models;
+using MVC2.ViewModels;
 
 namespace MVC2.Controllers
 {
@@ -22,11 +23,23 @@ namespace MVC2.Controllers
             ViewBag.depts = depts;
             return View();
         }
-        public IActionResult addProject(Project p)
+        [ValidateAntiForgeryToken]
+        public IActionResult addProject(ProjectVM p)
         {
-            db.projects.Add(p);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Project pro = new Project()
+                {
+                    name = p.name,
+                    location = p.location,
+                    departmentid = p.departmentid
+                };
+                db.projects.Add(pro);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+
         }
         public IActionResult updateForm(int id)
         {
