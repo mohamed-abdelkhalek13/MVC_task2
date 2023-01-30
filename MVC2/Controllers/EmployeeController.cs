@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVC2.Models;
 namespace MVC2.Controllers
 {
@@ -82,6 +84,29 @@ namespace MVC2.Controllers
             db.employees.Remove(emp);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public IActionResult employeeProjectsHours()
+        {
+            ViewBag.empsList = new SelectList(db.employees.Select(s => new { s.id, fullName = s.fname + " " + s.lname }).ToList(), "id", "fullName");
+            return View();
+        }
+        public IActionResult getProjects(int id)
+        {
+            var projs = db.workson.Include(s => s.employee).Include(s => s.project).Where(s => s.employeeid == id).Select(s => s.project).ToList();
+            ViewBag.projsList = new SelectList(projs, "id", "name");
+            return PartialView("_getProjects");
+        }
+        public IActionResult getHours(int id, int name)
+        {
+            var works = db.workson.SingleOrDefault(w => w.employeeid == id && w.projectid == name);
+            return PartialView("_getHours", works);
+        }
+        public IActionResult updateHours(WorksOn w)
+        {
+            var wOn = db.workson.SingleOrDefault(s => s.employeeid == w.employeeid && s.projectid == w.projectid);
+            wOn.hours = w.hours;
+            db.SaveChanges();
+            return RedirectToAction("employeeProjectsHours");
         }
     }
 
